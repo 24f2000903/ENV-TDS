@@ -21,7 +21,7 @@ jobs:
           python-version: '3.11'  # adjust if needed
 
       # Step 3: Cache Python dependencies
-      - name: Prime cache ef3dd89
+      - name: prime-cache-ef3dd89
         id: prime-cache-ef3dd89
         uses: actions/cache@v4
         with:
