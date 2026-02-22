@@ -1,4 +1,4 @@
-name: Cache Example Workflow
+name: Python Flask Cache Workflow
 
 on:
   push:
@@ -10,23 +10,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout your repository
+      # Step 1: Checkout the repo
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      # Step 2: Prime the cache for dependencies
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'  # adjust if needed
+
+      # Step 3: Cache Python dependencies
       - name: Prime cache ef3dd89
         id: prime-cache-ef3dd89
         uses: actions/cache@v4
         with:
           path: |
-            node_modules
+            ~/.cache/pip
           key: cache-ef3dd89
 
-      # Step 3: Install dependencies (only installs missing ones if cache hits)
+      # Step 4: Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: pip install -r requirements.txt
 
-      # Step 4: Show whether cache was used
+      # Step 5: Show whether cache was used
       - name: Show cache result
         run: echo "Cache hit? ${{ steps.prime-cache-ef3dd89.outputs.cache-hit }}"
